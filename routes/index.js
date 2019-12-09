@@ -4,6 +4,7 @@ const size_controller = require("../controllers").size_controller;
 const order_controller = require("../controllers").order_controller;
 const order_item_controller = require("../controllers").order_item_controller;
 
+//TODO seperate the routes to be in different files
 module.exports = app => {
   app.get("/api/v1/", (req, res) =>
     res.status(200).send({

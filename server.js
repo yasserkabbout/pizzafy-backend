@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+
+//TODO add database variables in config.json to ENV file 
 //db.sequelize.sync({ force: true });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
