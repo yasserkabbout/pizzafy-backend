@@ -34,14 +34,14 @@ module.exports = app => {
 
   //Order routes (GET POST PUT DELETE)
   app.post("/api/v1/orders", order_controller.createOrder);
-  app.get("/api/v1/orders", order_controller.list);
+  app.get("/api/v1/orders", order_controller.list); //Provide userId or status as query parameters to filter the orders
   app.get("/api/v1/orders/:id", order_controller.getOrderById);
   app.put("/api/v1/orders/:id", order_controller.updateOrder);
   app.delete("/api/v1/orders/:id", order_controller.deleteOrder);
 
   //Order Item routes (GET POST PUT DELETE)
   app.post("/api/v1/orderitems", order_item_controller.createOrderItem);
-  app.get("/api/v1/orderitems", order_item_controller.list);
+  app.get("/api/v1/orderitems", order_item_controller.list); 
   app.get("/api/v1/orderitems/:id", order_item_controller.getOrderItemById);
   app.put("/api/v1/orderitems/:id", order_item_controller.updateOrderItem);
   app.delete("/api/v1/orderitems/:id", order_item_controller.deleteOrderItem);

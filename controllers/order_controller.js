@@ -38,9 +38,49 @@ const createOrder = (req, res) => {
 
 // GET Request to list all orders in the database
 const list = (req, res) => {
-  return Order.findAll()
-    .then(Order => res.status(200).send(Order))
-    .catch(error => res.status(400).send(error));
+  console.log(req.query.status);
+  console.log(req.query.userId);
+  let status = req.query.status;
+  let userId = req.query.userId;
+
+  //Filter order by Status
+  if (status !== undefined && userId === undefined) {
+    return Order.findAll({
+      where: {
+        status: status
+      }
+    })
+      .then(Order => res.status(200).send(Order))
+      .catch(error => res.status(400).send(error));
+  }
+
+  //Filter order by userId
+  if (userId !== undefined && status === undefined) {
+    return Order.findAll({
+      where: {
+        user_id: userId
+      }
+    })
+      .then(Order => res.status(200).send(Order))
+      .catch(error => res.status(400).send(error));
+  }
+
+  //Filter order by staus and userId
+  if (userId !== undefined && status !== undefined) {
+    return Order.findAll({
+      where: {
+        user_id: userId,
+        status: status
+      }
+    })
+      .then(Order => res.status(200).send(Order))
+      .catch(error => res.status(400).send(error));
+  }
+  if (userId === undefined && status === undefined) {
+    return Order.findAll()
+      .then(Order => res.status(200).send(Order))
+      .catch(error => res.status(400).send(error));
+  }
 };
 
 // GET Request to get an Order
