@@ -1,4 +1,6 @@
-# pizzafy-backend
+<p align="center">
+  <img align="center"   src="pizzafyBackendGif.gif">
+</p>
 
 ## Scripts
 
