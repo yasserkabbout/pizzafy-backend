@@ -42,7 +42,7 @@ module.exports = app => {
 
   //Order Item routes (GET POST PUT DELETE)
   app.post("/api/v1/orderitems", order_item_controller.createOrderItem);
-  app.get("/api/v1/orderitems", order_item_controller.list); 
+  app.get("/api/v1/orderitems", order_item_controller.list);
   app.get("/api/v1/orderitems/:id", order_item_controller.getOrderItemById);
   app.put("/api/v1/orderitems/:id", order_item_controller.updateOrderItem);
   app.delete("/api/v1/orderitems/:id", order_item_controller.deleteOrderItem);
