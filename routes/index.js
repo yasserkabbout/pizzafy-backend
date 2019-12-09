@@ -1,6 +1,8 @@
 const user_controller = require("../controllers").user_controller;
 const pizza_controller = require("../controllers").pizza_controller;
 const size_controller = require("../controllers").size_controller;
+const order_controller = require("../controllers").order_controller;
+const order_item_controller = require("../controllers").order_item_controller;
 
 module.exports = app => {
   app.get("/api/v1/", (req, res) =>
@@ -29,4 +31,19 @@ module.exports = app => {
   app.get("/api/v1/pizzasizes/:id", size_controller.getSizeById);
   app.put("/api/v1/pizzasizes/:id", size_controller.updateSize);
   app.delete("/api/v1/pizzasizes/:id", size_controller.deleteSize);
+
+  //Order routes (GET POST PUT DELETE)
+  app.post("/api/v1/orders", order_controller.createOrder);
+  app.get("/api/v1/orders", order_controller.list);
+  app.get("/api/v1/orders/:id", order_controller.getOrderById);
+  app.put("/api/v1/orders/:id", order_controller.updateOrder);
+  app.delete("/api/v1/orders/:id", order_controller.deleteOrder);
+
+  //Order Item routes (GET POST PUT DELETE)
+  app.post("/api/v1/orderitems", order_item_controller.createOrderItem);
+  app.get("/api/v1/orderitems", order_item_controller.list);
+  app.get("/api/v1/orderitems/:id", order_item_controller.getOrderItemById);
+  app.put("/api/v1/orderitems/:id", order_item_controller.updateOrderItem);
+  app.delete("/api/v1/orderitems/:id", order_item_controller.deleteOrderItem);
+
 };

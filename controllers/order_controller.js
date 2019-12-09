@@ -1,10 +1,38 @@
 const Order = require("../models").order;
+const User = require("../models").user;
+const OrderItem = require("../models").order_item;
 
 // POST Request to create a new order
 const createOrder = (req, res) => {
-  return Order.create({})
-    .then(Order => res.status(201).send(Order))
-    .catch(error => res.status(400).send(error));
+  
+  return User.create({
+    first_name: req.body.userData.first_name,
+    last_name: req.body.userData.last_name,
+    email: req.body.userData.email,
+    phone_number: req.body.userData.phone_number,
+    address: req.body.userData.address
+  })
+    .then(User => {
+      let createdUserid = User.dataValues.id;
+      return Order.create({
+        user_id: createdUserid,
+        status: req.body.status,
+        total_price: req.body.total_price
+        
+      }).then(Order => {
+        let createdOrderid = Order.dataValues.id;
+        return OrderItem.create({
+          order_id: createdOrderid,
+          pizza_id: req.body.orderItem.pizza_id,
+          size: req.body.orderItem.size,
+          quantity: req.body.orderItem.quantity,
+          price: req.body.orderItem.price
+
+        })
+      }).then(OrderItem => res.status(201).send(OrderItem))
+      
+    })
+ 
 };
 
 // GET Request to list all orders in the database
@@ -34,10 +62,7 @@ const updateOrder = (req, res) => {
   Order.update(
     //this can be changed to a dynamic object (for scaling issues) in the future like fields: Object.keys(req.body)
     {
-      type: req.body.type,
-      description: req.body.description,
-      ingredients: req.body.ingredients,
-      base_price: req.body.base_price
+      status: req.body.status
     },
     { where: { id: id } }
   )

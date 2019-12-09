@@ -10,7 +10,10 @@ const createUser = (req, res) => {
     phone_number: req.body.phone_number,
     address: req.body.address
   })
-    .then(User => res.status(201).send(User))
+    .then(User => {
+      console.log(User.dataValues);
+      res.status(201).send(User);}
+      )
     .catch(error => res.status(400).send(error));
 };
 
