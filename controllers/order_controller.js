@@ -96,19 +96,32 @@ const getOrderById = (req, res) => {
     .catch(error => res.status(400).send(error));
 };
 
-// PUT Request to update an Order
+// PUT Request to update an Order (Orders in delivered status can not be updated)
 const updateOrder = (req, res) => {
   let id = req.params.id;
+  let status = req.body.status;
 
-  Order.update(
-    //this can be changed to a dynamic object (for scaling issues) in the future like fields: Object.keys(req.body)
-    {
-      status: req.body.status
-    },
-    { where: { id: id } }
-  )
-    .then(Order => res.status(200).send(Order))
-    .catch(error => res.status(400).send(error));
+  return Order.findAll({
+    where: {
+      id: id
+    }
+  }).then(result => {
+    let currentOrderStatus = result[0].dataValues.status;
+
+    //if the order status is "Delivered", return 400
+    if (currentOrderStatus.includes("Delivered")) {
+      return res.status(400).send("Order in Delivery can not be modified");
+    } else {
+      return Order.update(
+        {
+          status: status
+        },
+        { where: { id: id } }
+      )
+        .then(result => res.status(200).send(result))
+        .catch(error => res.status(400).send(error));
+    }
+  });
 };
 
 // DELETE Request to delete a user
