@@ -1,5 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
+  //Statuses are Submitted, Preparing, InDelivey, Delivered
+  //TODO Create a seperate Table/Model for Order Status {Submitted: 1, Preparing: 2, InDelivery:3, Delivered: 4}
   const order = sequelize.define('order', {
      user_id: DataTypes.INTEGER,
      status: DataTypes.STRING,
