@@ -45,5 +45,4 @@ module.exports = app => {
   app.get("/api/v1/orderitems/:id", order_item_controller.getOrderItemById);
   app.put("/api/v1/orderitems/:id", order_item_controller.updateOrderItem);
   app.delete("/api/v1/orderitems/:id", order_item_controller.deleteOrderItem);
-
 };

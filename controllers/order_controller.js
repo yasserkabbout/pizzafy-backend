@@ -4,35 +4,36 @@ const OrderItem = require("../models").order_item;
 
 // POST Request to create a new order
 const createOrder = (req, res) => {
-  
+  //Create the User for the order
   return User.create({
     first_name: req.body.userData.first_name,
     last_name: req.body.userData.last_name,
     email: req.body.userData.email,
     phone_number: req.body.userData.phone_number,
     address: req.body.userData.address
-  })
-    .then(User => {
-      let createdUserid = User.dataValues.id;
-      return Order.create({
-        user_id: createdUserid,
-        status: req.body.status,
-        total_price: req.body.total_price
-        
-      }).then(Order => {
+  }).then(User => {
+    let createdUserid = User.dataValues.id;
+
+    //Create the Order having the createdUserid as a foreign key referencing users table
+    return Order.create({
+      user_id: createdUserid,
+      status: req.body.status,
+      total_price: req.body.total_price
+    })
+      .then(Order => {
         let createdOrderid = Order.dataValues.id;
+
+        //Create the order item having the createdOrder as a foreign key referencing orders table
         return OrderItem.create({
           order_id: createdOrderid,
           pizza_id: req.body.orderItem.pizza_id,
           size: req.body.orderItem.size,
           quantity: req.body.orderItem.quantity,
           price: req.body.orderItem.price
-
-        })
-      }).then(OrderItem => res.status(201).send(OrderItem))
-      
-    })
- 
+        });
+      })
+      .then(OrderItem => res.status(201).send(OrderItem));
+  });
 };
 
 // GET Request to list all orders in the database

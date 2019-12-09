@@ -2,9 +2,7 @@ const OrderItem = require("../models").order_item;
 
 // POST Request to create a new Order Item
 const createOrderItem = (req, res) => {
-  return OrderItem.create({
-   
-  })
+  return OrderItem.create({})
     .then(OrderItem => res.status(201).send(OrderItem))
     .catch(error => res.status(400).send(error));
 };
@@ -33,10 +31,7 @@ const getOrderItemById = (req, res) => {
 const updateOrderItem = (req, res) => {
   let id = req.params.id;
 
-  OrderItem.update(
- 
- 
-  )
+  OrderItem.update()
     .then(OrderItem => res.status(200).send(OrderItem))
     .catch(error => res.status(400).send(error));
 };
